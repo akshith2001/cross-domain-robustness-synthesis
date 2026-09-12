@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Cross-Domain Robustness Synthesis: Does a Single Retention Metric Generalise?"
+type: software
+version: 0.1.0
+license: MIT
+authors:
+  - family-names: Moharampudi
+    given-names: Akshith
+    orcid: "https://orcid.org/0009-0009-3177-8492"
+repository-code: "https://github.com/akshith2001/cross-domain-robustness-synthesis"
+abstract: >-
+  A synthesis testing whether a single robustness-retention ratio can
+  meaningfully compare "degradation under stress" across three
+  independently evaluated machine-learning research projects, using only
+  each project's own already-published, locked results. Finds that it
+  cannot: an equally defensible alternative within-domain comparison
+  widens the observed cross-domain range by more than 4x and flips at
+  least one project's ranking from most to least robust.
+keywords:
+  - trustworthy AI
+  - robustness evaluation
+  - cross-domain generalisation
+  - responsible AI
+  - evaluation methodology
+  - meta-analysis
+references:
+  - type: software
+    title: "TrustLens AI"
+    authors:
+      - family-names: Moharampudi
+        given-names: Akshith
+        orcid: "https://orcid.org/0009-0009-3177-8492"
+    repository-code: "https://github.com/akshith2001/trustlens-ai"
+  - type: software
+    title: "Hospitality Sustainability AI"
+    authors:
+      - family-names: Moharampudi
+        given-names: Akshith
+        orcid: "https://orcid.org/0009-0009-3177-8492"
+    repository-code: "https://github.com/akshith2001/hospitality-sustainability-ai"
+  - type: software
+    title: "Cross-Sector Greenhouse Gas Scenario Model"
+    authors:
+      - family-names: Moharampudi
+        given-names: Akshith
+        orcid: "https://orcid.org/0009-0009-3177-8492"
+    repository-code: "https://github.com/akshith2001/ghg-scenario-model"
