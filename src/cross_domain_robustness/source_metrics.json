@@ -1,0 +1,26 @@
+{
+  "trustlens": {
+    "source": "https://github.com/akshith2001/trustlens-ai/blob/main/docs/results.md",
+    "recall": {"development": 0.879, "locked_test": 0.833},
+    "ece": {"development": 0.032, "locked_test": 0.070}
+  },
+  "ghg": {
+    "method": "Deterministically re-derived from the released rank-reversal implementation and data: 1000 samples, seed 2026, target 2500 kg CO2e.",
+    "source_code": "https://github.com/akshith2001/ghg-scenario-model",
+    "selected_measures": [
+      {"name": "Reduce tap-running time (kitchen)", "abatement_kg_co2e": 620.0, "selection_frequency": 1.000},
+      {"name": "Kitchen equipment scheduling optimisation", "abatement_kg_co2e": 260.0, "selection_frequency": 0.737},
+      {"name": "Boiler efficiency service and tune", "abatement_kg_co2e": 900.0, "selection_frequency": 0.973},
+      {"name": "Waste segregation and recycling programme", "abatement_kg_co2e": 300.0, "selection_frequency": 0.557},
+      {"name": "Delivery-route consolidation", "abatement_kg_co2e": 480.0, "selection_frequency": 1.000}
+    ]
+  },
+  "hospitality": {
+    "source": "https://github.com/akshith2001/hospitality-sustainability-ai/tree/main/docs",
+    "mae": {"rolling_development": 111.87, "locked_test": 159.92},
+    "spatial_improvement_over_baseline": {
+      "Fox_food_Francesco": {"unseen_venue": 0.548, "unseen_venue_and_future": 0.408},
+      "Mouse_lodging_Vicente": {"unseen_venue": 0.325, "unseen_venue_and_future": 0.503}
+    }
+  }
+}

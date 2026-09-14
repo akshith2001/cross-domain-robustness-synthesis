@@ -1,0 +1,25 @@
+{
+  "alternative_comparison_rrr": {
+    "Hospitality AI (spatial generalisation, Fox venue)": 0.7445255474452553,
+    "Hospitality AI (spatial generalisation, Mouse venue)": 1.5476923076923077,
+    "TrustLens AI (calibration ECE, development to locked test)": 0.45714285714285713
+  },
+  "diagnostics": {
+    "full_range": {
+      "maximum": 1.5476923076923077,
+      "minimum": 0.45714285714285713,
+      "spread": 1.0905494505494506
+    },
+    "naive_range": {
+      "maximum": 0.9476678043230944,
+      "minimum": 0.6995372686343172,
+      "spread": 0.2481305356887772
+    },
+    "spread_multiplier": 4.3950634593289015
+  },
+  "naive_single_comparison_rrr": {
+    "GHG module (frequency-weighted abatement retention)": 0.9118828125,
+    "Hospitality AI (MAE, rolling development to locked test)": 0.6995372686343172,
+    "TrustLens AI (recall, development to locked test)": 0.9476678043230944
+  }
+}

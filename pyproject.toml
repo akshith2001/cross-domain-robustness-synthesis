@@ -5,11 +5,30 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cross-domain-robustness-synthesis"
 version = "0.1.0"
-description = "Does a single robustness-retention metric generalise across independently evaluated ML research projects? A synthesis using only already-published results."
+description = "A reproducible synthesis testing whether one robustness-retention metric generalises across ML domains."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Akshith Moharampudi" }]
 requires-python = ">=3.10"
+keywords = ["trustworthy-ai", "robustness", "reproducible-research"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+]
+dependencies = []
+
+[project.optional-dependencies]
+figures = ["matplotlib>=3.8"]
+
+[project.urls]
+Repository = "https://github.com/akshith2001/cross-domain-robustness-synthesis"
+Documentation = "https://github.com/akshith2001/cross-domain-robustness-synthesis/blob/main/docs/cross_domain_robustness_synthesis.md"
 
 [project.scripts]
 cdrs-synthesis = "cross_domain_robustness.synthesis:_cli"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+cross_domain_robustness = ["source_metrics.json"]

@@ -32,16 +32,16 @@
 \maketitle
 
 \begin{center}
-\fbox{\parbox{0.9\textwidth}{\centering \textbf{Scope statement.} This is a synthesis of already-published, already-locked results from three independent research prototypes. It introduces no new predictive models and no new primary evidence within any single domain. Its contribution is the cross-domain comparison itself and an honest negative result about that comparison's validity.}}
+\fbox{\parbox{0.9\textwidth}{\centering \textbf{Scope statement.} This is a synthesis of versioned evidence from three independent research prototypes. TrustLens and Hospitality inputs come from released result documents; the GHG ratio is deterministically re-derived from released code and data. It introduces no new predictive model and does not retrain a source model.}}
 \end{center}
 
 \vspace{0.5cm}
 
 \begin{abstract}
-Three independently developed machine-learning research prototypes, spanning credit-risk classification, climate and energy scenario optimisation, and building-energy forecasting, each report their own evaluation of model behaviour under stress: population drift and out-of-distribution detection, Monte Carlo perturbation of cost and abatement assumptions, and generalisation to unseen venues and future time periods, respectively. This note asks whether these three independently designed evaluations can be summarised under one common cross-domain "Robustness Retention Ratio" (RRR), so that a reviewer could compare "how robust" the three systems are to one another using a single number. Using only each project's own already-published, locked results, the single most natural stress comparison in each domain yields a tidy, monotonic-looking ranking (RRR range 0.700--0.948). Substituting an equally defensible alternative comparison already reported within the same projects widens this range to 0.457--1.548, more than four times wider, and reverses one project's ranking from most to least robust depending purely on which already-published metric is used for the identical underlying comparison. One venue shows RRR $>1$: performance improved under the strictly harder condition, an honest anomaly reported rather than discarded. The synthesis concludes that a single scalar cannot responsibly summarise cross-domain robustness, and that a defensible framework requires reporting a small vector of named, domain-appropriate retention scores rather than one aggregated figure.
+Three independently developed machine-learning research prototypes, spanning credit-risk classification, climate and energy scenario optimisation, and building-energy forecasting, each report their own evaluation of model behaviour under stress: population drift and out-of-distribution detection, Monte Carlo perturbation of cost and abatement assumptions, and generalisation to unseen venues and future time periods, respectively. This note asks whether these three independently designed evaluations can be summarised under one common cross-domain "Robustness Retention Ratio" (RRR), so that a reviewer could compare "how robust" the three systems are to one another using a single number. Using versioned source-project evidence---reported results for TrustLens and Hospitality and a deterministic re-derivation from released code and data for GHG---the single most natural stress comparison in each domain yields a tidy, monotonic-looking ranking (RRR range 0.700--0.948). Substituting an equally defensible alternative comparison already reported within the same projects widens this range to 0.457--1.548, more than four times wider, and reverses one project's ranking from most to least robust depending purely on which reported metric is used for the identical underlying comparison. One venue shows RRR $>1$: performance improved under the strictly harder condition, an honest anomaly reported rather than discarded. The synthesis concludes that a single scalar cannot responsibly summarise cross-domain robustness, and that a defensible framework requires reporting a small vector of named, domain-appropriate retention scores rather than one aggregated figure.
 
 \vspace{0.3cm}
-\noindent\textbf{Keywords:} trustworthy AI; robustness evaluation; cross-domain generalisation; responsible AI; evaluation methodology; meta-analysis.
+\noindent\textbf{Keywords:} trustworthy AI; robustness evaluation; cross-domain generalisation; responsible AI; evaluation methodology; research synthesis.
 \end{abstract}
 
 \section{Introduction}
@@ -52,7 +52,7 @@ Research portfolios that span multiple domains face a recurring temptation: havi
 
 \subsection{Contributions}
 \begin{itemize}[leftmargin=*]
-    \item A reproducible synthesis using only already-published, already-locked results from three independent research projects, with no new primary experiments.
+    \item A reproducible synthesis of versioned evidence from three independent research projects, with no source-model retraining.
     \item A demonstration that a naive, non-cherry-picked cross-domain robustness comparison produces a result that looks clean and publishable, but is not robust to substituting an equally defensible alternative comparison already present in the same source material.
     \item An explicit account of why this happens (robustness is a multi-axis, not scalar, construct) and what a defensible cross-domain evaluation framework would need to report instead.
 \end{itemize}
@@ -144,7 +144,7 @@ A defensible cross-domain robustness benchmark cannot report a single number per
 \begin{itemize}[leftmargin=*]
     \item This synthesis draws on three research prototypes built by one author with related design philosophies; it does not sample the space of possible ML systems or domains, and the specific numeric spread reported here is illustrative of the phenomenon, not a general-purpose estimate of how much metric choice matters in general.
     \item Only one alternative comparison per domain was tested where available; a fuller study would enumerate all defensible within-domain comparisons systematically rather than selecting one.
-    \item This is a synthesis of already-published, already-locked numbers; it is not a new predictive model or a new dataset, and its contribution is the cross-domain comparison and the honest negative result about metric portability, not new primary evidence within any one domain.
+    \item TrustLens and Hospitality inputs are reported results; GHG frequencies are deterministically re-derived from released code and data using 1,000 samples, seed 2026 and a 2,500 kg CO2e target. It is not a new predictive model or dataset.
 \end{itemize}
 
 \section{Conclusion}

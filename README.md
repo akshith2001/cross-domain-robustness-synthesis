@@ -1,5 +1,9 @@
 # Cross-Domain Robustness Synthesis
 
+[![CI](https://github.com/akshith2001/cross-domain-robustness-synthesis/actions/workflows/ci.yml/badge.svg)](https://github.com/akshith2001/cross-domain-robustness-synthesis/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](pyproject.toml)
+
 > **Related work:** this project synthesises already-published results from
 > [`trustlens-ai`](https://github.com/akshith2001/trustlens-ai) (credit-risk
 > classification), [`ghg-scenario-model`](https://github.com/akshith2001/ghg-scenario-model)
@@ -8,11 +12,12 @@
 > (building-energy forecasting), testing whether a single robustness metric
 > can meaningfully compare "degradation under stress" across all three.
 
-**Important:** this is a research synthesis, not a new predictive model. It
-uses only numbers each of the three projects above has already published
-and locked; it introduces no new experiments within any single domain. Its
-contribution is the cross-domain comparison itself, and an honest negative
-result about whether that comparison is meaningful.
+**Important:** this is a research synthesis, not a new predictive model.
+TrustLens and Hospitality inputs are taken from their released result
+documents. The GHG ratio is deterministically re-derived from its released
+code and data (1,000 samples, seed 2026, target 2,500 kg CO2e). No source
+model is retrained. The versioned [source manifest](src/cross_domain_robustness/source_metrics.json)
+makes every input and provenance note auditable.
 
 ## Research question
 
@@ -73,16 +78,17 @@ domain-appropriate scores rather than one aggregated number.
 ## Reproduce
 
 ```bash
-pip install -e .
+python -m pip install -e ".[figures]"
 python -m unittest discover -s tests -v
-cdrs-synthesis --output results.json
+python -m cross_domain_robustness --output results/reference_synthesis.json
 python figures/plot_spread.py
 ```
 
-All 10 automated tests pass, including direct tests of the paper's central
+The automated tests include direct checks of the paper's central
 claim (`TestCoreClaim` in `tests/test_synthesis.py`): that the full range
 including alternative comparisons is at least double the naive range, and
-that TrustLens AI's ranking flips between the two metric choices.
+that TrustLens AI's ranking flips between the two metric choices. GitHub
+Actions repeats the tests and figure generation on Python 3.10 and 3.12.
 
 ## Limitations
 
@@ -94,9 +100,10 @@ that TrustLens AI's ranking flips between the two metric choices.
 - Only one alternative comparison per domain was tested where available; a
   fuller study would enumerate all defensible within-domain comparisons
   systematically.
-- All source numbers are taken directly from each project's own locked,
-  published results (see `docs/cross_domain_robustness_synthesis.md` for
-  full citations); none are newly measured here.
+- TrustLens and Hospitality values come from released result documents. The
+  GHG selection frequencies are deterministically re-derived from released
+  code/data because the exact intermediate frequencies were not all printed
+  in its narrative report. This distinction is recorded in the source manifest.
 
 See [`docs/cross_domain_robustness_synthesis.md`](docs/cross_domain_robustness_synthesis.md)
 for the full write-up, including the reasoning connecting this finding to

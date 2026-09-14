@@ -1,4 +1,9 @@
 import unittest
+import json
+import subprocess
+import sys
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from cross_domain_robustness.synthesis import (
     trustlens_rrr_recall,
@@ -7,6 +12,8 @@ from cross_domain_robustness.synthesis import (
     hospitality_rrr_temporal,
     hospitality_rrr_spatial,
     run_synthesis,
+    retention_ratio,
+    load_source_metrics,
 )
 
 
@@ -23,6 +30,8 @@ class TestIndividualRRRComputations(unittest.TestCase):
         # The optimizer's own published result: 5 measures, 2,560 kg CO2e/year nominal
         self.assertAlmostEqual(nominal_total, 2560.0, places=1)
         self.assertLess(weighted_total, nominal_total)
+        self.assertAlmostEqual(weighted_total, 2334.42, places=2)
+        self.assertAlmostEqual(rrr, 0.9118828125, places=9)
         self.assertAlmostEqual(rrr, weighted_total / nominal_total, places=6)
 
     def test_hospitality_temporal_rrr_matches_source_numbers(self):
@@ -69,8 +78,8 @@ class TestCoreClaim(unittest.TestCase):
         summary = run_synthesis()
         naive = summary["naive_single_comparison_rrr"]
         alt = summary["alternative_comparison_rrr"]
-        trustlens_naive_key = "TrustLens AI (recall, dev→locked test)"
-        trustlens_alt_key = "TrustLens AI (calibration ECE, dev→locked test)"
+        trustlens_naive_key = "TrustLens AI (recall, development to locked test)"
+        trustlens_alt_key = "TrustLens AI (calibration ECE, development to locked test)"
 
         self.assertEqual(max(naive, key=naive.get), trustlens_naive_key)
 
@@ -91,6 +100,31 @@ class TestReproducibility(unittest.TestCase):
         s1 = run_synthesis()
         s2 = run_synthesis()
         self.assertEqual(s1, s2)
+
+    def test_source_manifest_contains_provenance(self):
+        metrics = load_source_metrics()
+        self.assertTrue(metrics["trustlens"]["source"].startswith("https://"))
+        self.assertIn("seed 2026", metrics["ghg"]["method"])
+
+    def test_diagnostics_report_more_than_fourfold_spread(self):
+        self.assertGreater(run_synthesis()["diagnostics"]["spread_multiplier"], 4.0)
+
+    def test_retention_ratio_rejects_non_positive_inputs(self):
+        with self.assertRaises(ValueError):
+            retention_ratio(0, 1)
+        with self.assertRaises(ValueError):
+            retention_ratio(1, -1)
+
+    def test_cli_output_parent_can_be_created(self):
+        with TemporaryDirectory() as directory:
+            output = Path(directory) / "nested" / "result.json"
+            subprocess.run(
+                [sys.executable, "-m", "cross_domain_robustness", "--output", str(output)],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(json.loads(output.read_text(encoding="utf-8")), run_synthesis())
 
 
 if __name__ == "__main__":

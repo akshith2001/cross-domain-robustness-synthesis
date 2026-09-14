@@ -96,17 +96,16 @@ accuracy claims.
 - Only one alternative comparison per domain was tested where available;
   a fuller study would enumerate all defensible within-domain comparisons
   systematically rather than selecting one.
-- This is a synthesis of already-published, already-locked numbers from
-  each project's own prior evaluation; it is not a new predictive model
-  or a new dataset, and its contribution is the cross-domain comparison
-  and the honest negative result about metric portability, not new
-  primary evidence within any one domain.
+- TrustLens and Hospitality inputs come from released result documents.
+  The GHG frequencies are deterministically re-derived from released code
+  and data using 1,000 samples, seed 2026 and a 2,500 kg CO2e target. This
+  is not a new predictive model or dataset, and no source model is retrained.
 
 ## Reproduce
 
 ```bash
-pip install -e .
+python -m pip install -e ".[figures]"
 python -m unittest discover -s tests -v
-cdrs-synthesis --output results.json
+python -m cross_domain_robustness --output results/reference_synthesis.json
 python figures/plot_spread.py
 ```

@@ -3,6 +3,7 @@ message: "If you use this software, please cite it as below."
 title: "Cross-Domain Robustness Synthesis: Does a Single Retention Metric Generalise?"
 type: software
 version: 0.1.0
+date-released: 2026-09-14
 license: MIT
 authors:
   - family-names: Moharampudi
@@ -12,9 +13,10 @@ repository-code: "https://github.com/akshith2001/cross-domain-robustness-synthes
 abstract: >-
   A synthesis testing whether a single robustness-retention ratio can
   meaningfully compare "degradation under stress" across three
-  independently evaluated machine-learning research projects, using only
-  each project's own already-published, locked results. Finds that it
-  cannot: an equally defensible alternative within-domain comparison
+  independently evaluated machine-learning research projects. TrustLens
+  and Hospitality inputs come from released result documents; the GHG
+  ratio is deterministically re-derived from released code and data. An
+  equally defensible alternative within-domain comparison
   widens the observed cross-domain range by more than 4x and flips at
   least one project's ranking from most to least robust.
 keywords:
@@ -23,7 +25,7 @@ keywords:
   - cross-domain generalisation
   - responsible AI
   - evaluation methodology
-  - meta-analysis
+  - research synthesis
 references:
   - type: software
     title: "TrustLens AI"
