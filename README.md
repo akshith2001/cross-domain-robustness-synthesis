@@ -12,12 +12,42 @@
 > (building-energy forecasting), testing whether a single robustness metric
 > can meaningfully compare "degradation under stress" across all three.
 
+## TL;DR
+
+I tried to boil down "how robust is my model" into one comparable number
+across three different projects. It worked, at first, three tidy numbers,
+a clean ranking. Then I swapped in an equally fair alternative comparison
+already sitting in the same projects' own results, and the ranking
+reversed and the range more than quadrupled. **The honest conclusion:
+a single robustness score is not a safe thing to report or compare across
+systems.** This repo contains the tested, CI-checked code that produces
+both results, a versioned manifest tracing every input number back to its
+source, the write-up explaining why the collapse happens, and a short
+academic preprint version of the same finding.
+
 **Important:** this is a research synthesis, not a new predictive model.
 TrustLens and Hospitality inputs are taken from their released result
 documents. The GHG ratio is deterministically re-derived from its released
 code and data (1,000 samples, seed 2026, target 2,500 kg CO2e). No source
 model is retrained. The versioned [source manifest](src/cross_domain_robustness/source_metrics.json)
 makes every input and provenance note auditable.
+
+## What's in this repository
+
+| File | What it is | Read this if... |
+|---|---|---|
+| **This README** | Quick overview, headline result, reproduce steps | You want the short version |
+| [`docs/cross_domain_robustness_synthesis.md`](docs/cross_domain_robustness_synthesis.md) | Full narrative write-up, same content as the preprint but in plain Markdown | You want the full reasoning without opening a PDF |
+| [`cross_domain_robustness_preprint.tex`](cross_domain_robustness_preprint.tex) | Formal academic preprint (LaTeX source), same content, typeset for citation/Zenodo | You want a citable, paper-formatted version |
+| [`src/cross_domain_robustness/source_metrics.json`](src/cross_domain_robustness/source_metrics.json) | Versioned manifest: every input number and where it came from | You want to audit provenance before trusting a figure |
+| [`src/cross_domain_robustness/synthesis.py`](src/cross_domain_robustness/synthesis.py) | The actual computation: both RRR comparisons, built from the manifest | You want to see or verify exactly how the numbers were computed |
+| [`tests/test_synthesis.py`](tests/test_synthesis.py) | Automated tests, including direct tests of the paper's central claim | You want proof the numbers are reproducible, not asserted |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | GitHub Actions: runs the tests and regenerates the figure on Python 3.10 and 3.12 | You want to confirm this isn't just passing on one machine |
+| [`figures/`](figures/) | The comparison chart (`plot_spread.py` generates it) | You want the chart or its source data |
+
+The README, the Markdown doc, and the LaTeX preprint all tell the same
+story at three different levels of formality, they are not three separate
+pieces of work.
 
 ## Research question
 
@@ -93,17 +123,17 @@ Actions repeats the tests and figure generation on Python 3.10 and 3.12.
 ## Limitations
 
 - This synthesis draws on three research prototypes built by one author
-  with related design philosophies; it does not sample the space of
-  possible ML systems or domains, and the specific spread reported here
-  is illustrative of the phenomenon, not a general-purpose estimate of how
-  much metric choice matters in general.
+with related design philosophies; it does not sample the space of
+possible ML systems or domains, and the specific spread reported here
+is illustrative of the phenomenon, not a general-purpose estimate of how
+much metric choice matters in general.
 - Only one alternative comparison per domain was tested where available; a
-  fuller study would enumerate all defensible within-domain comparisons
-  systematically.
+fuller study would enumerate all defensible within-domain comparisons
+systematically.
 - TrustLens and Hospitality values come from released result documents. The
-  GHG selection frequencies are deterministically re-derived from released
-  code/data because the exact intermediate frequencies were not all printed
-  in its narrative report. This distinction is recorded in the source manifest.
+GHG selection frequencies are deterministically re-derived from released
+code/data because the exact intermediate frequencies were not all printed
+in its narrative report. This distinction is recorded in the source manifest.
 
 See [`docs/cross_domain_robustness_synthesis.md`](docs/cross_domain_robustness_synthesis.md)
 for the full write-up, including the reasoning connecting this finding to
