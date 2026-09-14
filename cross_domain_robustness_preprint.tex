@@ -1,0 +1,178 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{authblk}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={Cross-Domain Robustness Synthesis: Does a Single Retention Metric Generalise?},
+    pdfauthor={Akshith Moharampudi}
+}
+
+\title{\textbf{Cross-Domain Robustness Synthesis: Does a Single\\ Retention Metric Generalise Across Independently\\ Evaluated Machine-Learning Systems?}}
+
+\author[1]{Akshith Moharampudi}
+\affil[1]{Independent Research Portfolio; MComp Computer Science, Middlesex University London}
+
+\date{Research note v0.1 --- September 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{\centering \textbf{Scope statement.} This is a synthesis of already-published, already-locked results from three independent research prototypes. It introduces no new predictive models and no new primary evidence within any single domain. Its contribution is the cross-domain comparison itself and an honest negative result about that comparison's validity.}}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{abstract}
+Three independently developed machine-learning research prototypes, spanning credit-risk classification, climate and energy scenario optimisation, and building-energy forecasting, each report their own evaluation of model behaviour under stress: population drift and out-of-distribution detection, Monte Carlo perturbation of cost and abatement assumptions, and generalisation to unseen venues and future time periods, respectively. This note asks whether these three independently designed evaluations can be summarised under one common cross-domain "Robustness Retention Ratio" (RRR), so that a reviewer could compare "how robust" the three systems are to one another using a single number. Using only each project's own already-published, locked results, the single most natural stress comparison in each domain yields a tidy, monotonic-looking ranking (RRR range 0.700--0.948). Substituting an equally defensible alternative comparison already reported within the same projects widens this range to 0.457--1.548, more than four times wider, and reverses one project's ranking from most to least robust depending purely on which already-published metric is used for the identical underlying comparison. One venue shows RRR $>1$: performance improved under the strictly harder condition, an honest anomaly reported rather than discarded. The synthesis concludes that a single scalar cannot responsibly summarise cross-domain robustness, and that a defensible framework requires reporting a small vector of named, domain-appropriate retention scores rather than one aggregated figure.
+
+\vspace{0.3cm}
+\noindent\textbf{Keywords:} trustworthy AI; robustness evaluation; cross-domain generalisation; responsible AI; evaluation methodology; meta-analysis.
+\end{abstract}
+
+\section{Introduction}
+
+Research portfolios that span multiple domains face a recurring temptation: having built governance or robustness evaluations independently within each project, it is natural to ask whether these evaluations can be compared directly, for example, to claim that one system is "more robust" than another. This note treats that temptation as a testable question rather than a rhetorical one, using three prototypes already in the author's portfolio: TrustLens AI (a governed credit-risk classifier), a cross-sector greenhouse-gas scenario model with a least-cost abatement optimiser, and Hospitality Sustainability AI (an explainable electricity-demand forecaster).
+
+\paragraph{Research question.} Can a single Robustness Retention Ratio, computed identically across three independently evaluated machine-learning systems, meaningfully summarise how much each system's performance degrades under stress, or does this comparison depend on an arbitrary choice of which within-domain evaluation counts as the relevant stress test?
+
+\subsection{Contributions}
+\begin{itemize}[leftmargin=*]
+    \item A reproducible synthesis using only already-published, already-locked results from three independent research projects, with no new primary experiments.
+    \item A demonstration that a naive, non-cherry-picked cross-domain robustness comparison produces a result that looks clean and publishable, but is not robust to substituting an equally defensible alternative comparison already present in the same source material.
+    \item An explicit account of why this happens (robustness is a multi-axis, not scalar, construct) and what a defensible cross-domain evaluation framework would need to report instead.
+\end{itemize}
+
+\section{Method}
+
+\subsection{Source projects and their existing stress evaluations}
+
+\begin{table}[h]
+\centering
+\caption{The three source projects and the stress evaluation already reported by each.}
+\begin{tabular}{@{}p{3.2cm}p{4.5cm}p{6.5cm}@{}}
+\toprule
+\textbf{Project} & \textbf{Domain} & \textbf{Existing stress evaluation(s)} \\
+\midrule
+TrustLens AI & Governed credit-risk classification & Locked development-to-test generalisation gap, reported separately for discrimination (recall, balanced accuracy) and calibration (Brier score, expected calibration error) \\
+GHG scenario model & Climate/energy optimisation & Monte Carlo rank-reversal analysis: 1{,}000 perturbations of measure-level cost and abatement assumptions within stated uncertainty \\
+Hospitality Sustainability AI & Building electricity-demand forecasting & Separate temporal (rolling development $\to$ locked future test) and spatial (unseen-venue, and unseen-venue-and-future-period) generalisation tests \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Robustness Retention Ratio}
+
+For each domain, a Robustness Retention Ratio (RRR) is computed as
+\[
+\text{RRR} = \frac{\text{performance under the harder condition}}{\text{performance under the easier condition}},
+\]
+using whichever of the project's own metrics makes higher values indicate better performance (error-based metrics such as MAE and expected calibration error are inverted, so that RRR $=1$ always denotes no degradation and RRR $<1$ always denotes degradation, regardless of the underlying metric's native direction).
+
+\subsection{Naive comparison}
+
+For each domain, the single most natural, non-cherry-picked stress comparison already present in that project's own evaluation design is used.
+
+\subsection{Alternative comparison}
+
+For each domain in which more than one stress evaluation is already published, a second, equally defensible comparison is substituted, without altering the naive comparison's selection criteria (natural, already-published, not newly constructed for this synthesis).
+
+\section{Results}
+
+\subsection{The naive comparison looks clean}
+
+\begin{table}[h]
+\centering
+\caption{Naive single-comparison Robustness Retention Ratio, one per domain.}
+\begin{tabular}{@{}p{5cm}p{6cm}c@{}}
+\toprule
+\textbf{Domain} & \textbf{Comparison} & \textbf{RRR} \\
+\midrule
+TrustLens AI & Development recall (0.879) $\to$ locked test recall (0.833) & 0.948 \\
+GHG scenario model & Nominal abatement (2{,}560 kg CO\textsubscript{2}e/yr) $\to$ frequency-weighted retained abatement under perturbation & 0.912 \\
+Hospitality Sustainability AI & Rolling-development MAE (111.87) $\to$ locked test MAE (159.92), inverse-error & 0.700 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This produces a tidy, monotonic-looking ranking spanning 0.700 to 0.948 (spread 0.248): TrustLens AI appears most robust, the GHG module close behind, and Hospitality Sustainability AI noticeably less robust to its own stress test.
+
+\subsection{An equally valid alternative comparison breaks the ranking}
+
+\begin{table}[h]
+\centering
+\caption{Alternative, equally non-cherry-picked comparison, substituted where each project reports more than one stress evaluation.}
+\begin{tabular}{@{}p{5cm}p{6cm}c@{}}
+\toprule
+\textbf{Domain} & \textbf{Alternative comparison} & \textbf{RRR} \\
+\midrule
+TrustLens AI & Development ECE (0.032) $\to$ locked test ECE (0.070), inverse-error & 0.457 \\
+Hospitality AI (Fox venue) & Unseen-venue-only $\to$ unseen-venue-and-future-period improvement & 0.745 \\
+Hospitality AI (Mouse venue) & Unseen-venue-only $\to$ unseen-venue-and-future-period improvement & 1.548 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Including these alternatives, the observed range becomes 0.457 to 1.548 (spread 1.091), more than four times wider than the naive range. TrustLens AI moves from the single most robust domain (0.948, by recall) to the single least robust value observed anywhere in the synthesis (0.457, by calibration), using two metrics from the identical underlying development-to-locked-test comparison. The Mouse\_lodging\_Vicente venue shows RRR $>1$: the model performed \emph{better} under the strictly harder, doubly-stressed condition than under the easier, singly-stressed condition, an honest anomaly rather than a modelling error, which this synthesis reports rather than discards.
+
+\section{Discussion}
+
+\subsection{Why this happens}
+
+Robustness is not a single construct. Discrimination, calibration, temporal generalisation, spatial generalisation, and parameter-uncertainty robustness are logically separate axes of "what could go wrong," and each source project's own governance design already treats them separately: TrustLens AI's locked precedence rules distinguish drift signals from confidence scores; the GHG model's rank-reversal analysis distinguishes cost uncertainty from abatement-potential uncertainty; Hospitality Sustainability AI explicitly separates temporal from spatial generalisation in its own reporting. A single cross-domain retention ratio necessarily collapses one of these axes, silently privileging whichever metric happens to be chosen. This reintroduces, at the cross-domain level, precisely the failure mode that each project's own within-domain governance layer was built to prevent.
+
+\subsection{Implication for cross-domain evaluation frameworks}
+
+A defensible cross-domain robustness benchmark cannot report a single number per system. Based on this synthesis, a minimally adequate summary would report a small vector of named, domain-appropriate scores, at minimum a discrimination-based score, a calibration-based score, and a generalisation-axis score appropriate to the domain (temporal, spatial, or parameter-uncertainty), presented together rather than aggregated. Any single-number leaderboard comparing how robust different systems or domains are should be treated with the same scepticism this portfolio already applies to single-point accuracy claims in each of its constituent projects.
+
+\section{Limitations}
+
+\begin{itemize}[leftmargin=*]
+    \item This synthesis draws on three research prototypes built by one author with related design philosophies; it does not sample the space of possible ML systems or domains, and the specific numeric spread reported here is illustrative of the phenomenon, not a general-purpose estimate of how much metric choice matters in general.
+    \item Only one alternative comparison per domain was tested where available; a fuller study would enumerate all defensible within-domain comparisons systematically rather than selecting one.
+    \item This is a synthesis of already-published, already-locked numbers; it is not a new predictive model or a new dataset, and its contribution is the cross-domain comparison and the honest negative result about metric portability, not new primary evidence within any one domain.
+\end{itemize}
+
+\section{Conclusion}
+
+Attempting the simplest possible cross-domain robustness comparison across three independently evaluated machine-learning systems produces a result that looks clean and publishable using one reasonable choice of within-domain comparison, and a substantially different, even rank-reversing, result using another equally reasonable choice from the same source material. This is not a failure of any individual project's evaluation; each project's own within-domain governance design already anticipated exactly this kind of metric-dependence. It is a failure of the naive act of collapsing multi-axis robustness into one cross-domain scalar. The corrected recommendation is direct: report a vector of named, domain-appropriate robustness scores, not one number, whenever comparing trustworthiness claims across systems or domains.
+
+\section*{Reproducibility Statement}
+
+The complete synthesis code, tests (including direct tests of this paper's central claim), and figure-generation script are public and tested. Repository: \url{https://github.com/akshith2001/cross-domain-robustness-synthesis}.
+
+\begin{verbatim}
+pip install -e .
+python -m unittest discover -s tests -v
+cdrs-synthesis --output results.json
+python figures/plot_spread.py
+\end{verbatim}
+
+\begin{thebibliography}{9}
+
+\bibitem{moharampudi2026trustlens}
+Moharampudi, A. (2026). TrustLens AI: Human-Governed Machine Learning for Reliability-Aware Risk Classification. \textit{Zenodo}. \url{https://doi.org/10.5281/zenodo.22664688}
+
+\bibitem{moharampudi2026hospitality}
+Moharampudi, A. (2026). Hospitality Sustainability AI: Explainable Electricity Forecasting, Anomaly Investigation and Sustainability Decision Support. \textit{Zenodo}. \url{https://doi.org/10.5281/zenodo.22664937}
+
+\bibitem{moharampudi2026ghg}
+Moharampudi, A. (2026). Transparent Cross-Sector Emissions Scenarios Under Parameter Uncertainty. \textit{Zenodo}. \url{https://doi.org/10.5281/zenodo.22681364}
+
+\end{thebibliography}
+
+\end{document}
