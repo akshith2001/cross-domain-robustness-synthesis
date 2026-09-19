@@ -48,3 +48,11 @@ references:
         given-names: Akshith
         orcid: "https://orcid.org/0009-0009-3177-8492"
     repository-code: "https://github.com/akshith2001/ghg-scenario-model"
+
+  - type: software
+    title: "Federated Cross-Domain Learning"
+    authors:
+      - family-names: Moharampudi
+        given-names: Akshith
+        orcid: "https://orcid.org/0009-0009-3177-8492"
+    repository-code: "https://github.com/akshith2001/federated-cross-domain-learning"
